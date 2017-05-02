@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Lions</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <main>
+      <h1>Lions</h1>
+
+      <form name="lions">
+        <div class="textbox">
+          <input type="text" name="lion-name" required />
+          <span class="highlight"></span>
+          <label>lion name</label>
+        </div>
+
+        <div class="textbox">
+          <input type="text" name="lion-pride" required />
+          <span class="highlight"></span>
+          <label>lion pride</label>
+        </div>
+
+        <input type="number" name="lion-age">
+        <select name="select">
+          <option value="female">female</option>
+          <option value="male">male</option>
+        </select>
+        <button>Submit</button>
+      </form>
+
+      <div class="content">
+        <ul class="lion-list"></ul>
+      </div>
+    </main>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
