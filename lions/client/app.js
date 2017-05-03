@@ -39,8 +39,25 @@ var getValues = function() {
   };
 };
 
+var makeLionList = function() {
+  lions.forEach(function(lion) {
+    makeTemplate(lion);
+  });
+};
+
+var getAllLions = function() {
+  fetch('/lions')
+    .then(function(resp) {
+    return resp.json();
+  })
+  .then(function(data) {
+    lions = lions.concat(data);
+    makeLionList();
+  });
+};
 
 (function(){
+  getAllLions();
   var form = document.querySelector('form');
 
   form.addEventListener('submit', function(e) {

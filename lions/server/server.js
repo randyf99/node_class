@@ -2,64 +2,26 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
 var _ = require('lodash');
+var morgan = require('morgan');
 
+var lionRouter = require('./lions');
+var tigerRouter = require('./tigers');
+
+app.use(morgan('dev'));
 app.use(express.static('client'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-// {
-// 	"name": "Simba",
-// 	"pride":"Cool Cats",
-// 	"age": 4,
-// 	"gender": "Male"
-// }
+// This is called mounting. when a req comes in for
+// /lion, we want to use this router
+app.use('/lions', lionRouter);
+app.use('/tigers', tigerRouter);
 
-var lions = [];
-var id = 0;
 
-app.get('/lions', function(req, res) {
-  res.json(lions);
-});
-
-app.get('/lions/:id', function(req, res) {
-  var lion = _.find(lions, {id: req.params.id});
-  res.json(lion || {});
-});
-
-app.post('/lions', function(req, res) {
-  var lion = req.body;
-  id++;
-  lion.id = id + '';
-
-  lions.push(lion);
-  res.json(lion);
-});
-
-app.put('/lions/:id', function(req, res) {
-  var update = req.body;
-  if (update.id) {
-    delete update.id;
-  }
-
-  var lion = _.findIndex(lions, {id: req.params.id});
-  if (!lions[lion]) {
-    res.send();
-  } else {
-    var updatedLion = _.assign(lions[lion], update);
-    res.json(updatedLion);
+app.use(function(err, req, res, next) {
+  if (err) {
+    res.status(500).send(error);
   }
 });
-
-app.delete('/lions/:id', function(req, res) {
-  var lion = _.findIndex(lions, {id: req.params.id});
-  if (!lions[lion]) {
-    res.send();
-  } else {
-    var deletedLion = lions[lion];
-    lions.splice(lion, 1);
-    res.json(deletedLion);
-  }
-});
-
 
 app.listen(3000);
