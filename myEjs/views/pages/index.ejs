@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <% include ../partials/head %>
+  </head>
+  <body class="container">
+    <header>
+      <% include ../partials/header %>
+    </header>
+    <main>
+      <div class="jumbotron">
+        <h1>This is Super Cool</h1>
+        <p>Welcome to templating with EJS</p>
+      </div>
+      <div>
+        <h2>Cheap Advice (variable)</h2>
+        <p><%= tagline %></p>
+      </div>
+      <h2>Drinks (loop)</h2>
+      <ul>
+        <% drinks.forEach(function(drink) { %>
+          <li><%= drink.name %> - <%= drink.drunkness %></li>
+        <% }); %>
+      </ul>
+    </main>
+    <footer>
+      <% include ../partials/footer %>
+    </footer>
+  </body>
+</html>
