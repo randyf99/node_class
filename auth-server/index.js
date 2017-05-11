@@ -1,30 +1,32 @@
 const mongoose = require('mongoose');
 
 const User = require('./user');
+const Post = require('./post');
 
 mongoose.connect('mongodb://yoda:yoda@ds133261.mlab.com:33261/lions', (err) => {
-  // Create a new document using our model
-  const me = new User({
-    firstName: 'Randy',
-    lastName: 'Ferrer',
-    username: 'randyf',
-    email: 'rferrer@fvi.edu',
-    password: 'coolPassword'
+  const post = new Post({
+    date: Date.now(),
+    title: 'My Epic Post',
+    content: 'This is just too epic!!',
+    author: {
+      name: 'Randy Ferrer',
+      email: 'rferrer@fvi.edu'
+    }
   });
 
-  me.save((err) => {
+  post.save((err) => {
+    if (err) { throw err; }
+
+    console.log(post);
+    process.exit();
+  });
+
+  Post.find((err, posts) => {
     if (err) {
       throw err;
     }
 
-    User.find((err, users) => {
-      if (err) {
-        throw err;
-      }
-
-      console.log(users);
-      process.exit();
-    });
-  });
-
+    console.log(posts);
+    process.exit();
+  })
 });
